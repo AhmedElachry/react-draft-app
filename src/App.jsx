@@ -2,38 +2,32 @@ import { useState } from "react";
 import "./App.css";
 
 function App() {
-  // const charArray = ["i", "h", "g", "f", "a", "e", "i", "d", "c", "b", "a"];
+  const unsortedArray = [10, 8, 6, 5, 4, 3, 2, 1];
 
-  // const [arr, setArr] = useState(charArray);
-  // const [sortingIndex, setSortingIndex] = useState(null);
+  const [arr, setArr] = useState(unsortedArray);
+  const [sortingIndex, setSortingIndex] = useState(null);
 
-  // async function bubbleSort(arr) {
-  //   const n = arr.length;
+  async function bubbleSort(arr) {
+    const n = arr.length;
 
-  //   for (let i = 0; i < n - 1; i++) {
-  //     let swapped = false;
-  //     for (let j = 0; j < n - 1 - i; j++) {
-  //       if (arr[j] > arr[j + 1]) {
-  //         // Swap elements arr[j] and arr[j + 1]
-  //         const temp = arr[j];
-  //         arr[j] = arr[j + 1];
-  //         arr[j + 1] = temp;
-  //         swapped = true;
-  //         console.log(arr);
-  //       }
-  //       setArr([...arr]);
-  //       setSortingIndex(j);
-  //       await new Promise((resolve) => setTimeout(resolve, 1000)); // 1-second delay
-  //     }
-  //     if (!swapped) {
-  //       break; // If no swaps were made, the array is already sorted
-  //     }
-  //   }
-  // }
+    for (let i = 0; i < n; i++) {
+      let minIndex = i;
+      for (let j = i + 1; j < n; j++) {
+        if (arr[j] < arr[minIndex]) {
+          const temp = arr[j];
+          arr[j] = arr[minIndex];
+          arr[minIndex] = temp;
+        }
+        setArr([...arr]);
+        setSortingIndex(i - 1);
+        await new Promise((resolve) => setTimeout(resolve, 500)); // 1-second delay
+      }
+    }
+  }
 
   return (
     <div className="bg-[#000] text-white flex justify-center flex-col items-center">
-      {/* <ul className="relative h-44 w-full">
+      <ul className="relative h-44 w-full">
         {arr.map((item, index) => (
           <li
             key={index}
@@ -51,10 +45,10 @@ function App() {
       </ul>
       <button
         className="py-2 px-4 rounded bg-sky-400 hover:bg-sky-500 m-4"
-        onClick={() => bubbleSort([...charArray])}
+        onClick={() => bubbleSort([...unsortedArray])}
       >
         Sort
-      </button> */}
+      </button>
     </div>
   );
 }
