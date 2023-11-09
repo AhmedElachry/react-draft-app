@@ -1,60 +1,54 @@
-import { useState } from "react";
+// import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import "./App.css";
+import View from "./comp/View";
 
 function App() {
-  // const charArray = ["i", "h", "g", "f", "a", "e", "i", "d", "c", "b", "a"];
+  const [value, setValue] = useState(0);
 
-  // const [arr, setArr] = useState(charArray);
-  // const [sortingIndex, setSortingIndex] = useState(null);
+  console.log({ setValue });
+  const [loading, setLoading] = useState(true);
+  useEffect(() => {
+    console.log("mount");
 
-  // async function bubbleSort(arr) {
-  //   const n = arr.length;
+    setTimeout(() => {
+      setLoading(false);
+    }, 1000);
 
-  //   for (let i = 0; i < n - 1; i++) {
-  //     let swapped = false;
-  //     for (let j = 0; j < n - 1 - i; j++) {
-  //       if (arr[j] > arr[j + 1]) {
-  //         // Swap elements arr[j] and arr[j + 1]
-  //         const temp = arr[j];
-  //         arr[j] = arr[j + 1];
-  //         arr[j + 1] = temp;
-  //         swapped = true;
-  //         console.log(arr);
-  //       }
-  //       setArr([...arr]);
-  //       setSortingIndex(j);
-  //       await new Promise((resolve) => setTimeout(resolve, 1000)); // 1-second delay
-  //     }
-  //     if (!swapped) {
-  //       break; // If no swaps were made, the array is already sorted
-  //     }
-  //   }
-  // }
+    return () => {
+      console.log("unmount");
+    };
+  }, []);
 
   return (
-    <div className="bg-[#000] text-white flex justify-center flex-col items-center">
-      {/* <ul className="relative h-44 w-full">
-        {arr.map((item, index) => (
-          <li
-            key={index}
-            style={{
-              border: index - 1 === sortingIndex ? "1px solid green" : "",
-              left: (index + 1) * 116,
-            }}
-            className={
-              "transition-all duration-500 p-4 m-2 rounded w-[100px] h-[100px] flex justify-center items-center absolute border"
-            }
-          >
-            {item}
-          </li>
-        ))}
-      </ul>
-      <button
-        className="py-2 px-4 rounded bg-sky-400 hover:bg-sky-500 m-4"
-        onClick={() => bubbleSort([...charArray])}
-      >
-        Sort
-      </button> */}
+    <div>
+      {loading ? (
+        <div className="absolute top-0 left-0 w-full h-screen bg-black text-white flex items-center justify-center">
+          <p className="animate-bounce">loading...</p>
+        </div>
+      ) : (
+        ""
+      )}
+      <View value={"{}"} />
+      {value}
+      <div className="flex gap-2">
+        <button
+          className="py-1 px-2 bg-[#aaa] rounded border"
+          onClick={() => {
+            setValue((old) => old + 1);
+          }}
+        >
+          +
+        </button>
+        <button
+          className="py-1 px-2 bg-[#aaa] rounded border"
+          onClick={() => {
+            setValue((old) => old - 1);
+          }}
+        >
+          -
+        </button>
+      </div>
     </div>
   );
 }
